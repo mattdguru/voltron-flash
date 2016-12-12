@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   get "/redirect", to: "home#redirect", as: :redirect
   get "/landing", to: "home#landing", as: :landing
   get "/ajax", to: "home#ajax", as: :ajax
+
+  get 'test' => 'test#index'
+  get 'page' => 'test#page'
+  get 'redirect' => 'test#redirect'
 end
