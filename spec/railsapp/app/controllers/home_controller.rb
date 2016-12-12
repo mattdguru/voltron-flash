@@ -1,11 +1,11 @@
 class HomeController < ApplicationController
 
   def index
-    flash! warning: "Test"
+    flash! warning: "This flash message was set in flash.now automatically. Wait 3 seconds for ajax..."
   end
 
   def redirect
-    flash! notice: "You've been redirected"
+    flash! alert: "This flash message was set on the previous page. Wait 3 seconds for ajax..."
     redirect_to landing_path
   end
 
@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   end
 
   def ajax
-    flash! warning: "Oh noes"
+    flash! warning: "This came from an ajax request, check the headers"
     head :ok
   end
 
