@@ -30,7 +30,7 @@ describe TestController, type: :controller do
 
     controller.flash! notice: "Test"
 
-    expect(controller.instance_variable_get("@stored_flashes")).to eq({ notice: ["Test"] })
+    expect(controller.instance_variable_get("@stored_flashes")).to eq({ notice: [{ ajax: nil, messages: ["Test"] }] })
   end
 
   it "has flashes in the response headers" do

@@ -2,7 +2,7 @@ Voltron.addModule('Site', function(){
   return {
     initialize: function(){
       Voltron('Flash/setConfig', {
-        bind: '.container',
+        bind: 'body'
       });
 
       setTimeout(function(){

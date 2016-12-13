@@ -15,6 +15,6 @@ Voltron.setup do |config|
   config.flash.header = "X-Flash"
 
   # Whether to group flash messages by type, or give each flash message it's own line, complete with close icon
-  config.flash.group = true
+  config.flash.group = false
 
 end

@@ -14,6 +14,6 @@ describe Voltron::Config::Flash do
 
   it "includes flash config in voltron config when generated" do
     expect(Voltron.config.to_h).to have_key(:flash)
-    expect(Voltron.config.to_h[:flash]).to eq({ header: "X-Flash", group: true })
+    expect(Voltron.config.to_h[:flash]).to eq({ header: Voltron.config.flash.header, group: Voltron.config.flash.group })
   end
 end
