@@ -8,6 +8,10 @@ Voltron.addModule('Site', function(){
       setTimeout(function(){
         $.ajax({ url: '/ajax' })
       }, 3000);
+
+      setTimeout(function(){
+        $.ajax({ url: '/error' })
+      }, 6000);
     }
   };
 }, true);

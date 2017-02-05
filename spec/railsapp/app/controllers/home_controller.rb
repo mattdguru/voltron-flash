@@ -17,4 +17,8 @@ class HomeController < ApplicationController
     head :ok
   end
 
+  def error
+    raise Exception.new("Exception")
+  end
+
 end

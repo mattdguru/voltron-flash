@@ -38,7 +38,7 @@ module Voltron
       def include_flash_later
         if is_redirecting?
           flash_hash.each { |type,messages| flash[type] = messages }
-        elsif request.xhr?
+        else
           response.headers[Voltron.config.flash.header] = flash_hash.to_json
         end
       end
