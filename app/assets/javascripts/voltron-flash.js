@@ -1,6 +1,8 @@
 //= require voltron
 
 Voltron.addModule('Flash', function(){
+  var _initialized = false;
+
   var _defaults = {
     class: '',
     bind: 'body',
@@ -18,9 +20,12 @@ Voltron.addModule('Flash', function(){
 
   return {
     initialize: function(){
-      Voltron('Dispatch/addEventWatcher', 'click');
-      this.on('click:close-alert', 'click:close-notice', 'click:close-warning', this.clear);
-      this.addListener();
+      if(!_initialized){
+        _initialized = true;
+        Voltron('Dispatch/addEventWatcher', 'click');
+        this.on('click:close-alert', 'click:close-notice', 'click:close-warning', this.clear);
+        this.addListener();
+      }
     },
 
     setConfig: function(options){
