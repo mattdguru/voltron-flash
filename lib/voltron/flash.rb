@@ -41,10 +41,12 @@ module Voltron
         stored_flashes.each { |type,messages| flash.now[type] = messages }
       end
 
-      # When redirecting, remove the flash from the headers, append it all to the `flash` object
+      # When redirecting, remove the flash from the headers (unless ajax request), append it all to the `flash` object
       def include_flash_later
-        response.headers.except! Voltron.config.flash.header
-        stored_flashes.each { |type,messages| flash[type] = messages }
+        unless request.xhr?
+          response.headers.except! Voltron.config.flash.header
+          stored_flashes.each { |type,messages| flash[type] = messages }
+        end
       end
 
   end
