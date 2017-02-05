@@ -38,6 +38,7 @@ module Voltron
       # Before rendering, include any flash messages in flash.now,
       # so they will be available when the page is rendered
       def include_flash_now
+        response.headers.except! Voltron.config.flash.header unless request.xhr?
         stored_flashes.each { |type,messages| flash.now[type] = messages }
       end
 
