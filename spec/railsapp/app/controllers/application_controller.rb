@@ -3,6 +3,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception do |exception|
     flash! alert: "Access Denied"
-    render nothing: true
+    head :ok
   end
 end

@@ -11,14 +11,17 @@ module Voltron
 
     def render(*args)
       include_flash_now
-      super *args
+      super
     end
 
     def flash!(**flashes)
       flashes.symbolize_keys.each do |type,messages|
         stored_flashes[type] ||= []
-        stored_flashes[type] << { ajax: flashes.delete(:ajax), messages: Array.wrap(messages) }
+        stored_flashes[type] += Array.wrap(messages)
       end
+
+      # Set the headers initially. If redirecting, they will be removed as the flash will instead be a part of `flash`
+      response.headers[Voltron.config.flash.header] = stored_flashes.to_json
     end
 
     private
@@ -30,31 +33,20 @@ module Voltron
       # Before rendering, include any flash messages in flash.now,
       # so they will be available when the page is rendered
       def include_flash_now
-        flash_hash(true).each { |type,messages| flash.now[type] = messages }
+        stored_flashes.each { |type,messages| flash.now[type] = messages }
       end
 
       # If request is an ajax request, or we are redirecting, include flash messages
       # in the appropriate outlet, either response headers or `flash` itself
       def include_flash_later
         if is_redirecting?
-          flash_hash.each { |type,messages| flash[type] = messages }
-        else
-          response.headers[Voltron.config.flash.header] = flash_hash.to_json
+          response.headers.except! Voltron.config.flash.header
+          stored_flashes.each { |type,messages| flash[type] = messages }
         end
       end
 
       def is_redirecting?
         self.status == 302 || self.status == 301
-      end
-
-      def flash_hash(rendering=false)
-        flashes = stored_flashes.map do |type,messages|
-          { type => messages.map do |f|
-              f[:messages] if !(f[:ajax] == false && request.xhr?) || (f[:ajax] == false && request.xhr? && rendering)
-            end.compact.flatten
-          }
-        end
-        flashes.reduce(Hash.new, :merge).reject { |k,v| v.blank? || k == :ajax }
       end
 
   end

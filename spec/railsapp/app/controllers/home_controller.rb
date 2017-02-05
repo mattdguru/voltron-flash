@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   def index
     flash! warning: "This flash message was set in flash.now automatically. Wait 3 seconds for ajax..."
+    render :index
   end
 
   def redirect
