@@ -14,6 +14,11 @@ module Voltron
       super
     end
 
+    def redirect_to(options={}, response_status={})
+      include_flash_later
+      super
+    end
+
     def flash!(**flashes)
       flashes.symbolize_keys.each do |type,messages|
         stored_flashes[type] ||= []
@@ -36,17 +41,10 @@ module Voltron
         stored_flashes.each { |type,messages| flash.now[type] = messages }
       end
 
-      # If request is an ajax request, or we are redirecting, include flash messages
-      # in the appropriate outlet, either response headers or `flash` itself
+      # When redirecting, remove the flash from the headers, append it all to the `flash` object
       def include_flash_later
-        if is_redirecting?
-          response.headers.except! Voltron.config.flash.header
-          stored_flashes.each { |type,messages| flash[type] = messages }
-        end
-      end
-
-      def is_redirecting?
-        self.status == 302 || self.status == 301
+        response.headers.except! Voltron.config.flash.header
+        stored_flashes.each { |type,messages| flash[type] = messages }
       end
 
   end
