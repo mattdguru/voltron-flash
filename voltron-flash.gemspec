@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "rails", ">= 4.2"
-  spec.add_dependency "voltron", ">= 0.1.9"
+  spec.add_dependency "voltron", ">= 0.2.0"
   spec.add_dependency "sass-rails", ">= 5.0.0"
 
   spec.add_development_dependency "byebug"
