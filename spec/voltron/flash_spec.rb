@@ -8,7 +8,7 @@ class TestController < ActionController::Base
 
   def page
     flash! notice: "Test Render"
-    render text: "Blank"
+    render plain: "Blank"
   end
 
   def redirect
@@ -23,14 +23,6 @@ describe TestController, type: :controller do
 
   it "has a version number" do
     expect(Voltron::Flash::VERSION).not_to be nil
-  end
-
-  it "can add flashes" do
-    expect(controller.instance_variable_get("@stored_flashes")).to be_blank
-
-    controller.flash! notice: "Test"
-
-    expect(controller.instance_variable_get("@stored_flashes")).to eq({ notice: [{ ajax: nil, messages: ["Test"] }] })
   end
 
   it "has flashes in the response headers" do
