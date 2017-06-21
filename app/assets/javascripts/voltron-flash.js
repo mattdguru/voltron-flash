@@ -23,9 +23,12 @@ Voltron.addModule('Flash', function(){
       if(!_initialized){
         _initialized = true;
         Voltron('Dispatch/addEventWatcher', 'click');
-        this.on('click:close-alert', 'click:close-notice', 'click:close-warning', this.clear);
         this.addListener();
       }
+    },
+
+    onClickCloseFlash: function(o){
+      this.clear(o, $(o.element).data('flash-options') || {});
     },
 
     setConfig: function(options){
@@ -82,7 +85,7 @@ Voltron.addModule('Flash', function(){
       }));
 
       if(!Voltron.getConfig('flash/group') || !flash.find('.flash-close').length){
-        flash.append($('<button />', { class: 'flash-close', type: 'button', id: 'close-' + type, 'data-dispatch': 'click' }));
+        flash.append($('<button />', { class: 'flash-close', type: 'button', id: 'close-' + type, 'data-dispatch': 'flash:click/close_flash' }));
       }
 
       if(!this.getContainer(options).length){
