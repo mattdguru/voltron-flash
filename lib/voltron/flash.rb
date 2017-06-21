@@ -1,6 +1,6 @@
-require "voltron"
-require "voltron/flash/version"
-require "voltron/config/flash"
+require 'voltron'
+require 'voltron/flash/version'
+require 'voltron/config/flash'
 
 module Voltron
   module Flash
@@ -52,4 +52,4 @@ module Voltron
   end
 end
 
-require "voltron/flash/engine" if defined?(Rails)
+require 'voltron/flash/engine' if defined?(Rails)
