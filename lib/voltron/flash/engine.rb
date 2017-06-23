@@ -4,9 +4,7 @@ module Voltron
 
       isolate_namespace Voltron
 
-      config.autoload_paths += Dir["#{config.root}/lib/**/"]
-
-      initializer "voltron.flash.initialize" do
+      initializer 'voltron.flash.initialize' do
         ::ActionController::Base.send :prepend, ::Voltron::Flash
         ::ActionController::Base.send :helper, ::Voltron::FlashHelper
       end

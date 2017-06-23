@@ -38,13 +38,13 @@ Voltron.addModule('Flash', function(){
     },
 
     addListener: function(){
+      var self = this;
       $(document).ajaxComplete(function(event, request){
-        if(_defaults.autoAdd){
-          var flashes = request.getResponseHeader(Voltron.getConfig('flash/header', 'X-Flash'));
-          var flash = $.parseJSON(flashes);
-          if(flash){
-            Voltron('Flash/new', flash);
-          }
+        var flashes = request.getResponseHeader(Voltron.getConfig('flash/header', 'X-Flash'));
+        var flash = $.parseJSON(flashes);
+        Voltron.dispatch('flash:received', { event: event, request: request, flash: self, flashes: flash });
+        if(_defaults.autoAdd && flash){
+          Voltron('Flash/new', flash);
         }
       });
     },
@@ -53,10 +53,12 @@ Voltron.addModule('Flash', function(){
       options = $.extend(_defaults, options);
       var flash;
 
-      this.getContainer(options).addClass(options.class);
+      this.getContainer(options).addClass(options.containerClass);
 
       $.each(flashes, $.proxy(function(type, messages){
         flash = this.addFlash(type, messages, options);
+
+        flash.addClass(options.class);
 
         if(flash.find('.flash-message').length == 1){
           // If this is the first flash message, reveal the whole container
@@ -78,7 +80,7 @@ Voltron.addModule('Flash', function(){
     },
 
     addFlash: function(type, messages, options){
-      var flash = this.getFlash(type);
+      var flash = this.getFlash(type, options);
 
       flash.append($.map($.makeArray(messages), function(message){
         return $('<p />', { class: 'flash-message' }).html(message).hide();
@@ -96,7 +98,7 @@ Voltron.addModule('Flash', function(){
       return flash;
     },
 
-    getFlash: function(type){
+    getFlash: function(type, options){
       if(Voltron.getConfig('flash/group') && $('.flash.' + type).length){
         return $('.flash.' + type).first();
       }
@@ -135,7 +137,7 @@ Voltron.addModule('Flash', function(){
           }
         });
       }else{
-        // .clear() was called preumably with no arguments,
+        // .clear() was called presumably with no arguments,
         // in which case hide and remove the entire flashes container element
         options = $.extend(_defaults, options);
         $('#' + options.id)[options.concealMethod](options.concealTime, function(){

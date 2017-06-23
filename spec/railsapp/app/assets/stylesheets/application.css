@@ -14,7 +14,3 @@
  *= require_self
  *= require voltron-flash
  */
-
-.container {
-  width: 35%;
-}

@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Voltron library to more easily deal with flash messages}
   spec.homepage      = 'https://github.com/ehainer/voltron-flash'
-  spec.license       = 'MIT'
+  spec.license       = 'GNU GPL v3'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
