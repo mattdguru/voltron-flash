@@ -10,4 +10,4 @@ tmp/
 log/
 voltron-*.gem
 *.bak
-*.sqlite3
+public/

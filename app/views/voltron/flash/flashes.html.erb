@@ -1,0 +1,22 @@
+<% if flash.count > 0 %>
+<div id="flashes" class="<%= container_class %>">
+<% if Voltron.config.flash.group %>
+  <% flash.each do |type,messages| %>
+  <div class="flash <%= type %>">
+    <p class="flash-message"><%= Array.wrap(messages).join("<br />").html_safe %></p>
+    <button class="flash-close" type="button" id="close-<%= type %>" data-dispatch="flash:click/close_flash"></button>
+  </div>
+  <% end %>
+<% else %>
+  <% flash.each do |type,messages| %>
+    <% Array.wrap(messages).each do |message| %>
+    <div class="flash <%= type %>">
+      <p class="flash-message"><%= message.html_safe %></p>
+      <button class="flash-close" type="button" id="close-<%= type %>" data-dispatch="flash:click/close_flash"></button>
+    </div>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+<% end %>
+<% flash.clear %>
