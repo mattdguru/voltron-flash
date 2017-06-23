@@ -11,7 +11,7 @@ Unifying `flash` and `flash.now` logic into one single method, while also being 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'voltron-flash', '~> 0.1.5'
+gem 'voltron-flash', '~> 0.1.6'
 ```
 
 And then execute:
